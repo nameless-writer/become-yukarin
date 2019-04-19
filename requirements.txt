@@ -1,5 +1,5 @@
 numpy
-cupy
+cupy-cuda100
 chainer
 librosa
 pysptk

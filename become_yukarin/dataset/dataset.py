@@ -269,7 +269,15 @@ class AcousticFeatureNormalizeProcess(BaseDataProcess):
 
     def __call__(self, data: AcousticFeature, test=None):
         f0 = (data.f0 - self._mean.f0) / numpy.sqrt(self._var.f0)
-        f0[~data.voiced] = 0
+        length = len(f0)
+        if isinstance(data.voiced, float):
+            print(data.voiced)
+            print(f0)
+        for i in range(length):
+            if not data.voiced[i][0]:
+                f0[i] = [0]
+        #        print(f0[i])
+        #f0[~data.voiced] = 0
         return AcousticFeature(
             f0=f0,
             spectrogram=(data.spectrogram - self._mean.spectrogram) / numpy.sqrt(self._var.spectrogram),
@@ -485,7 +493,7 @@ def create(config: DatasetConfig):
     # cropping
     if config.train_crop_size is not None:
         def add_seed():
-            return LambdaProcess(lambda d, test: dict(seed=numpy.random.randint(2 ** 32), **d))
+            return LambdaProcess(lambda d, test: dict(seed=numpy.random.randint(2 ** 32, dtype='int64'), **d))
 
         def padding(s):
             return ChainProcess([

@@ -15,10 +15,14 @@ from become_yukarin.dataset import create as create_dataset
 from become_yukarin.model.model import create
 from become_yukarin.updater.updater import Updater
 
+class Conf(object):
+    pass
+
 parser = argparse.ArgumentParser()
 parser.add_argument('config_json_path', type=Path)
 parser.add_argument('output', type=Path)
 arguments = parser.parse_args()
+args = {'config_json_path': str(arguments.config_json_path), 'output': str(arguments.output)}
 
 config = create_from_json(arguments.config_json_path)
 arguments.output.mkdir(exist_ok=True)
@@ -79,5 +83,6 @@ trainer.extend(ext, trigger=trigger_snapshot)
 
 trainer.extend(extensions.LogReport(trigger=trigger_log))
 
-save_args(arguments, arguments.output)
+print(args)
+save_args(args, args['output'])
 trainer.run()

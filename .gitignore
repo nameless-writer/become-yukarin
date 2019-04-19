@@ -1,0 +1,10 @@
+*.npy
+*.wav
+*.pyc
+*.lab
+*.exe
+*.htsvoice
+*.mlf
+*.raw
+transcode.bat
+WORLD4py

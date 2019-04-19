@@ -1,0 +1,4 @@
+{
+    "config_json_path": "recipe\\config.json",
+    "output": "model"
+}

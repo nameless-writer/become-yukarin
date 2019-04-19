@@ -1,6 +1,9 @@
 """
 extract alignments voices.
 """
+import sys
+import os
+sys.path.append(os.getcwd())
 
 import argparse
 import multiprocessing
@@ -46,7 +49,7 @@ parser.add_argument('--disable_alignment', action='store_true')
 parser.add_argument('--enable_overwrite', action='store_true')
 arguments = parser.parse_args()
 
-pprint(dir(arguments))
+#pprint(dir(arguments))
 
 pre_convert = arguments.pre_converter1_config is not None
 if pre_convert:
@@ -151,6 +154,7 @@ def generate_mean_var(path_directory: Path):
     mfcc_list = []
     for path in path_directory.glob('*'):
         feature = acoustic_feature_load_process(path)
+        print(feature)
         f0_list.append(feature.f0[feature.voiced])  # remove unvoiced
         spectrogram_list.append(feature.spectrogram)
         aperiodicity_list.append(feature.aperiodicity)
